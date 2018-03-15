@@ -82,46 +82,46 @@ public class Main {
 			
 			// do all sorts so I can print first and last 4.
 			//do quick sort and print all results
-			QuickSort qs = new QuickSort();
-			updatedFoundArr = qs.quickSort(hashTable, updatedFoundArr, 0, numberFound-1);	
+			QuickSort qs = new QuickSort(hashTable);
+			updatedFoundArr = qs.quickSort( updatedFoundArr, 0, numberFound-1);	
 			System.out.println("first 4 after sorting on model name:");
 			for(int i = 0; i<4; i++) {
-				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial());
+				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial()+"   "+hashTable.get(updatedFoundArr[i]).getModel());
 			}
 			System.out.println("\nlast 4 after sorting on model name:");
 			for(int i = numberFound-4; i<numberFound; i++) {
-				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial());
+				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial()+"   "+hashTable.get(updatedFoundArr[i]).getModel());
 			}
 			System.out.println("\n---------------\n");
 			
 			
 			//do merge sort and print all results
-			MergeSort ms = new MergeSort();
-			ms.mergeSort(updatedFoundArr, 0, numberFound-1);
+			MergeSort ms = new MergeSort(hashTable);
+			updatedFoundArr = ms.mergeSort(updatedFoundArr, 0, numberFound-1);
 			
 			
 			System.out.println("first 4 after sorting on capacity:");
 			for(int i =0; i<4; i++) {
-				System.out.println(updatedFoundArr[i].getSerial());
+				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial()+"   "+hashTable.get(updatedFoundArr[i]).getCapacity());
 			}
 			
 			System.out.println("\nlast 4 after sorting on capacity:");
 			for(int i = numberFound-4; i<numberFound; i++) {
-				System.out.println(updatedFoundArr[i].getSerial());
+				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial()+"   "+hashTable.get(updatedFoundArr[i]).getCapacity());
 			}
 			
 			System.out.println("\n---------------\n");
 			
-			HeapSort hs = new HeapSort();
-			hs.heapSort(updatedFoundArr, numberFound);
+			HeapSort hs = new HeapSort(hashTable);
+			updatedFoundArr = hs.heapSort(updatedFoundArr, numberFound);
 			System.out.println("first 4 after sorting on powered on time:");
 			for(int i =0; i<4; i++) {
-				System.out.println(updatedFoundArr[i].getSerial());
+				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial()+"   "+hashTable.get(updatedFoundArr[i]).getPoweredOnTime());
 			}
 			
 			System.out.println("\nlast 4 after sorting on powered on time:");
 			for(int i = numberFound-4; i<numberFound; i++) {
-				System.out.println(updatedFoundArr[i].getSerial());
+				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial()+"   "+hashTable.get(updatedFoundArr[i]).getPoweredOnTime());
 			}
 			
 			

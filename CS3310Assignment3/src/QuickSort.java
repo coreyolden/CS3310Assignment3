@@ -1,9 +1,13 @@
 
 public class QuickSort {
 
+	MyHashTable hash;
 	
+	QuickSort(MyHashTable hashTable){
+		hash = hashTable;
+	}
 	
-	public String[] quickSort(MyHashTable hash, String[] arr, int low, int high) {
+	public String[] quickSort( String[] arr, int low, int high) {
 		if(arr.length == 0) {
 			return arr; //The array is empty
 		}
@@ -32,10 +36,10 @@ public class QuickSort {
 		}
 		
 		if (low < h)
-			quickSort(hash, arr, low, h);
+			quickSort(arr, low, h);
  
 		if (high > l)
-			quickSort(hash, arr, l, high);
+			quickSort(arr, l, high);
 		return arr;
 		
 	}
