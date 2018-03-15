@@ -65,14 +65,14 @@ public class Main {
 			
 			
 			
-			HDTestData[] updatedFoundArr = new HDTestData[numberFound]; //new array with only ones actually found
+			String[] updatedFoundArr = new String[numberFound]; //new array with only ones actually found
 			
 			
 			int index = 0; 
 			
 			for(int i = 0; i<length; i++) {
 				if(foundHDArr[i].getSerial().compareTo("notFound") != 0) {
-					updatedFoundArr[index]=foundHDArr[i]; //if an actual HD then add it to the new array
+					updatedFoundArr[index]=foundHDArr[i].getSerial(); //if an actual HD then add it to the new array
 					index++;
 				}
 			}
@@ -82,20 +82,22 @@ public class Main {
 			
 			// do all sorts so I can print first and last 4.
 			//do quick sort and print all results
-			quickSort(updatedFoundArr, 0, numberFound-1);	
+			QuickSort qs = new QuickSort();
+			updatedFoundArr = qs.quickSort(hashTable, updatedFoundArr, 0, numberFound-1);	
 			System.out.println("first 4 after sorting on model name:");
 			for(int i = 0; i<4; i++) {
-				System.out.println(updatedFoundArr[i].getSerial());
+				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial());
 			}
 			System.out.println("\nlast 4 after sorting on model name:");
 			for(int i = numberFound-4; i<numberFound; i++) {
-				System.out.println(updatedFoundArr[i].getSerial());
+				System.out.println(hashTable.get(updatedFoundArr[i]).getSerial());
 			}
 			System.out.println("\n---------------\n");
 			
 			
 			//do merge sort and print all results
-			mergeSort(updatedFoundArr, 0, numberFound-1);
+			MergeSort ms = new MergeSort();
+			ms.mergeSort(updatedFoundArr, 0, numberFound-1);
 			
 			
 			System.out.println("first 4 after sorting on capacity:");
@@ -110,7 +112,8 @@ public class Main {
 			
 			System.out.println("\n---------------\n");
 			
-			heapSort(updatedFoundArr, numberFound);
+			HeapSort hs = new HeapSort();
+			hs.heapSort(updatedFoundArr, numberFound);
 			System.out.println("first 4 after sorting on powered on time:");
 			for(int i =0; i<4; i++) {
 				System.out.println(updatedFoundArr[i].getSerial());
@@ -121,8 +124,7 @@ public class Main {
 				System.out.println(updatedFoundArr[i].getSerial());
 			}
 			
-			PartC partC = new PartC();
-			partC(hashTable);
+			
 		}
 			
 		
@@ -130,144 +132,7 @@ public class Main {
 	
 	
 	
-	public static void quickSort(HDTestData[] arr, int low, int high) {
-		if(arr.length == 0) {
-			return; //The array is empty
-		}
-		if(high <= low) {
-			return; 
-		}
-		int pivot = low + (high - low) / 2; //the middle
-		int l = low;
-		int h = high;
-		while(l <= h) {
-			while (arr[l].getModel().compareTo(arr[pivot].getModel()) < 0) {
-				l++;
-			}
- 
-			while (arr[h].getModel().compareTo(arr[pivot].getModel()) > 0) {
-				h--;
-			}
- 
-			if (l <= h) {
-				HDTestData hold = arr[l];
-				arr[l] = arr[h];
-				arr[h] = hold;
-				l++;
-				h--;
-			}
-		}
-		
-		if (low < h)
-			quickSort(arr, low, h);
- 
-		if (high > l)
-			quickSort(arr, l, high);
-		
-	}
 	
 	
-	public static void mergeSort(HDTestData[] arr, int low, int high) { // this splits it
-		if(low < high) {
-            int middle = (low +high)/2;
- 
-            mergeSort(arr, low, middle);
-            mergeSort(arr , middle+1, high);
- 
-            merge(arr, low, middle, high);
-        
-		}
-	}
-	
-	public static void merge(HDTestData[] arr, int low, int middle, int high) { //this combines it
-		
-		int lowerHalf = middle-low+1;
-		int upperHalf= high-middle;
-		
-        HDTestData lowNumbers[] = new HDTestData [lowerHalf];
-        HDTestData highNumbers[] = new HDTestData [upperHalf];
- 
-        for (int i=0; i<lowNumbers.length; ++i)
-            lowNumbers[i] = arr[low + i];
-        for (int i=0; i<highNumbers.length; ++i)
-            highNumbers[i] = arr[middle + 1+ i];
- 
- 
-        int i = 0;
-        
-        int j = 0;
- 
-        int k = low;
-        while (i < lowerHalf && j < upperHalf)
-        {
-            if (lowNumbers[i].getCapacity() <= highNumbers[j].getCapacity())
-            {
-                arr[k] = lowNumbers[i];
-                i++;
-            }
-            else
-            {
-                arr[k] = highNumbers[j];
-                j++;
-            }
-            k++;
-        }
-        while (i < lowerHalf)
-        {
-            arr[k] = lowNumbers[i];
-            i++;
-            k++;
-        }
- 
-        while (j < upperHalf)
-        {
-            arr[k] = highNumbers[j];
-            j++;
-            k++;
-        }
-    
-		
-	}
-	
-	public static void heapSort(HDTestData[] arr, int number) {
-	
-		//parent location = number/2-1
-		
-		for(int i = number/2-1; i>=0; i--) {
-			heapify(arr, number, i);
-		}
-		
-		for(int i = number-1; i>=0; i--) {
-			HDTestData hold = arr[0];
-			arr[0]= arr[i];
-			arr[i]= hold;
-			
-			heapify(arr, i, 0);
-		}
-		
-		
-	}
-	public static void heapify(HDTestData[] arr, int count, int i) {
-		int largest = i;
-		int left = 2*i+1;
-		int right = 2*i+2;
-		
-		if(left < count && arr[left].getPoweredOnTime() > arr[largest].getPoweredOnTime()) {
-			largest = left;
-		}
-		
-		if(right < count && arr[right].getPoweredOnTime() >arr[largest].getPoweredOnTime()) {
-			largest= right;
-		}
-		
-		if(largest != i) {
-			HDTestData swap = arr[i];
-			arr[i] = arr[largest];
-			arr[largest] = swap;
-			
-			heapify(arr, count, largest);
-			
-		}
-	}
 
 }
