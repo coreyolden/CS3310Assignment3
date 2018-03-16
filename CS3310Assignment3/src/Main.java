@@ -125,6 +125,81 @@ public class Main {
 			}
 			
 			
+			
+			
+			
+			// part C
+			
+			int n = 10;
+			int m = 5;
+			input = new BufferedReader(new FileReader("snum_70k.csv"));
+			
+			int numberInFile = 0;
+			while((readline = input.readLine())!=null) {
+				numberInFile++;
+			}
+			input.close();
+			input = new BufferedReader(new FileReader("snum_70k.csv"));
+			String[] hold70k = new String[numberInFile];
+			for(int i=0; i<numberInFile; i++) {
+				hold70k[i]=input.readLine();
+			}
+			String[] holdSearches = new String[n];
+			
+			Random rand = new Random();
+			
+			
+			//m quicksorts
+			long totalQuickSort=0;
+			for(int i = 0; i<m; i++) {
+				for(int j = 0; j<n; j++) {
+					int random = rand.nextInt(numberInFile)+1;
+					holdSearches[j]= hold70k[random];
+				}
+				long quickSortTime = System.nanoTime();
+				qs.quickSort(holdSearches, 0, n);
+				quickSortTime = System.nanoTime()-quickSortTime;
+				totalQuickSort+=quickSortTime;	
+			}
+			totalQuickSort = totalQuickSort/m;
+			
+			//m merge
+			long totalMergeSort=0;
+			for(int i = 0; i<m; i++) {
+				for(int j = 0; j<n; j++) {
+					int random = rand.nextInt(numberInFile)+1;
+					holdSearches[j]= hold70k[random];
+				}
+				long mergeSortTime = System.nanoTime();
+				ms.mergeSort(holdSearches, 0, n-1);
+				mergeSortTime = System.nanoTime()-mergeSortTime;
+				totalMergeSort+=mergeSortTime;	
+			}
+			totalMergeSort = totalMergeSort/m;
+			
+			long totalHeapSort =0;
+			for(int i = 0; i<m; i++) {
+				for(int j = 0; j<n; j++) {
+					int random = rand.nextInt(numberInFile)+1;
+					holdSearches[j]= hold70k[random];
+				}
+			long heapSortTime = System.nanoTime();
+			hs.heapSort(holdSearches, n);
+			heapSortTime = System.nanoTime()-heapSortTime;
+			totalHeapSort += heapSortTime;
+			}
+			totalHeapSort = totalHeapSort/m;
+			
+			System.out.println("------------------\n");
+			System.out.println("average time taken by quick sort on an "
+					+ "array of size n (calculated via m sorts): "+ totalQuickSort+" nanoseconds");
+			System.out.println("------------------\n");
+			System.out.println("average time taken by merge sort on an "
+					+ "array of size n (calculated via m sorts): "+ totalMergeSort+" nanoseconds");
+			System.out.println("------------------\n");
+			System.out.println("average time taken by heap sort on an "
+					+ "array of size n (calculated via m sorts): "+ totalHeapSort+" nanoseconds");
+			
 		}
 			
 		
