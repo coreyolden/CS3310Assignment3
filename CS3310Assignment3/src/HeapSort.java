@@ -3,10 +3,20 @@ public class HeapSort {
 
 MyHashTable hash;
 	
+/**basic constructor for passing in the hash table 
+ * 
+ * @param hashTable
+ */
 	HeapSort(MyHashTable hashTable){
 		hash = hashTable;
 	}
 	
+	/**forms the array as a heap and calls heapify to sort it
+	 * 
+	 * @param arr
+	 * @param number
+	 * @return
+	 */
 	public String[] heapSort(String[] arr, int number) {
 		
 		//parent location = number/2-1
@@ -26,6 +36,13 @@ MyHashTable hash;
 		return arr;
 		
 	}
+	
+	/** heapify data to bring largest data to the top 
+	 * 
+	 * @param arr
+	 * @param count
+	 * @param i
+	 */
 	public void heapify(String[] arr, int count, int i) {
 		int largest = i;
 		int left = 2*i+1;

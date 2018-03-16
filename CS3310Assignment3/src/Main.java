@@ -7,12 +7,25 @@ import java.util.Random;
 
 public class Main {
 
+	
+	/**This will read the file and fill the hash table. then it will search and sort based on model, capacity, and power on time. It will print
+	 * the first and last 4 results based on the search parameters. 70k will then be read and N number of items will be pulled out
+	 * put into a seperate array and searched M times.
+	 * 
+	 * @param args
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		MyHashTable hashTable = new MyHashTable();
-		BufferedReader input = new BufferedReader(new FileReader("data_main.csv"));
+		
+		MyHashTable hashTable = new MyHashTable();// hash table to be used for all searches and sorts
+		
+		
+		//read and store initial data
+		BufferedReader input = new BufferedReader(new FileReader("data_main.csv")); 
 		String readline;
 		input.readLine();
-		long timeToStore = System.nanoTime();
+		long timeToStore = System.nanoTime(); //start storing time
 		while((readline = input.readLine())!=null) {
 			HDTestData hdd = new HDTestData();
 			String[] fields = new String[4];
@@ -26,7 +39,7 @@ public class Main {
 		timeToStore = System.nanoTime()-timeToStore; //total time to store the HDDs is current time minus original time
 		
 		input.close();
-		System.out.println("\n\nAverage time to	insert into hash table:\n"+timeToStore+" nanoseconds");
+		System.out.println("\n\nAverage time to	insert into hash table:\n"+timeToStore+" nanoseconds"); //list time to sort
 		System.out.println("\n---------------\n");
 		if(args.length>0) { //running in command line with an argument provided
 			input = new BufferedReader(new FileReader(args[0]));
@@ -48,7 +61,7 @@ public class Main {
 			input.close();
 			
 			
-			long hashSearchTime = System.nanoTime();
+			long hashSearchTime = System.nanoTime();//start search time
 			for(int i = 0; i<length;i++) { //search and fill table with data
 				foundHDArr[i]= hashTable.get(searchArr[i]);
 			}
@@ -112,6 +125,7 @@ public class Main {
 			
 			System.out.println("\n---------------\n");
 			
+			//do heap sort and print all results
 			HeapSort hs = new HeapSort(hashTable);
 			updatedFoundArr = hs.heapSort(updatedFoundArr, numberFound);
 			System.out.println("first 4 after sorting on powered on time:");
@@ -130,15 +144,17 @@ public class Main {
 			
 			// part C
 			
-			int n = 10;
-			int m = 5;
-			input = new BufferedReader(new FileReader("snum_70k.csv"));
+			int n = 10; //used to gather the number of elements to search
+			int m = 5; // used to tell how many times to search
+			input = new BufferedReader(new FileReader("snum_70k.csv"));// read 70k
 			
+			//the file isnt actually 70k long so just go ahead and read the actual number close and then reopen
 			int numberInFile = 0;
 			while((readline = input.readLine())!=null) {
 				numberInFile++;
 			}
 			input.close();
+			//read the file and store all lines in the array
 			input = new BufferedReader(new FileReader("snum_70k.csv"));
 			String[] hold70k = new String[numberInFile];
 			for(int i=0; i<numberInFile; i++) {
@@ -151,17 +167,17 @@ public class Main {
 			
 			//m quicksorts
 			long totalQuickSort=0;
-			for(int i = 0; i<m; i++) {
-				for(int j = 0; j<n; j++) {
+			for(int i = 0; i<m; i++) { // for all m searches
+				for(int j = 0; j<n; j++) { //pull n random numbers and store then in holdSearches
 					int random = rand.nextInt(numberInFile)+1;
 					holdSearches[j]= hold70k[random];
 				}
-				long quickSortTime = System.nanoTime();
-				qs.quickSort(holdSearches, 0, n-1);
-				quickSortTime = System.nanoTime()-quickSortTime;
-				totalQuickSort+=quickSortTime;	
+				long quickSortTime = System.nanoTime(); //start single time
+				qs.quickSort(holdSearches, 0, n-1);//sort holdSearches
+				quickSortTime = System.nanoTime()-quickSortTime; //end single time
+				totalQuickSort+=quickSortTime;	//add to average
 			}
-			totalQuickSort = totalQuickSort/m;
+			totalQuickSort = totalQuickSort/m; //calculate average over M times
 			
 			//m merge
 			long totalMergeSort=0;
@@ -190,6 +206,7 @@ public class Main {
 			}
 			totalHeapSort = totalHeapSort/m;
 			
+			//print all results
 			System.out.println("------------------\n");
 			System.out.println("average time taken by quick sort on an "
 					+ "array of size n (calculated via m sorts): "+ totalQuickSort+" nanoseconds");

@@ -3,9 +3,15 @@ public class MyHashTable {
 
 	 MyLinkedList[] table = new MyLinkedList[10000];
 	 int flag = 0;
+	 
+	 /**generates a hash for the location to store the item in.
+	  * 
+	  * @param input
+	  * @return
+	  */
 	private int hash(String input) {
 		
-		// an example I saw online with some modifications. I will modify it more.
+		
 		int hash = 7;
 		for(int i = 0; i<input.length(); i++) {
 			hash=hash*31 + input.charAt(i);
@@ -19,6 +25,10 @@ public class MyHashTable {
 		
 	}
 	
+	/**takes the HDTestData, hashes it, and stores it in its spot. if the spot is taken add it to the linked list in that location 
+	 * 
+	 * @param input
+	 */
 	public void put(HDTestData input) {
 		
 		//instantiate the lists
@@ -37,6 +47,11 @@ public class MyHashTable {
 		table[hash].insert(input);}//if not then just add the node to the end of the list.
 	}
 	
+	/**hash the string and look in that box for the data. if it's found then return it. 
+	 * 
+	 * @param toFind
+	 * @return
+	 */
 	public HDTestData get(String toFind) {
 		int hash = hash(toFind);
 		HDTestData dataFound = new HDTestData();

@@ -3,10 +3,21 @@ public class QuickSort {
 
 	MyHashTable hash;
 	
+	/**basic constructor for inputing the hash table.
+	 * 
+	 * @param hashTable
+	 */
 	QuickSort(MyHashTable hashTable){
 		hash = hashTable;
 	}
 	
+	/**recursively sort the search by hashing and then looking up modle number and sorting by it.
+	 * 
+	 * @param arr
+	 * @param low
+	 * @param high
+	 * @return
+	 */
 	public String[] quickSort( String[] arr, int low, int high) {
 		if(arr.length == 0) {
 			return arr; //The array is empty
@@ -18,7 +29,7 @@ public class QuickSort {
 		int l = low;
 		int h = high;
 		while(l <= h) {
-			while (hash.get(arr[l]).getModel().compareTo(hash.get(arr[pivot]).getModel()) < 0) {
+			while (hash.get(arr[l]).getModel().compareTo(hash.get(arr[pivot]).getModel()) < 0) { //hash and compare model numbers.
 				l++;
 			}
  
