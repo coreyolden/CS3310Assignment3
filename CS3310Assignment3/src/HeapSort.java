@@ -41,7 +41,7 @@ MyHashTable hash;
 		
 		if(largest != i) {
 			String swap = arr[i];
-			arr[i] = (arr[largest];
+			arr[i] = arr[largest];
 			arr[largest] = swap;
 			
 			heapify(arr, count, largest);

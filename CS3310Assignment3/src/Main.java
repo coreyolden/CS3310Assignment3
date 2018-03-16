@@ -157,7 +157,7 @@ public class Main {
 					holdSearches[j]= hold70k[random];
 				}
 				long quickSortTime = System.nanoTime();
-				qs.quickSort(holdSearches, 0, n);
+				qs.quickSort(holdSearches, 0, n-1);
 				quickSortTime = System.nanoTime()-quickSortTime;
 				totalQuickSort+=quickSortTime;	
 			}
